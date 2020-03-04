@@ -8,6 +8,5 @@ Um bot feito em [Kotlin](https://kotlinlang.org/) para salvar todos meus tweets 
 | --------------------------------------------------------- | ---------------------- | ------------- |
 | [Intellij IDEA](https://www.jetbrains.com/idea/)          | IDE utilizada          | JetBrains     |
 | [Kotlin](https://kotlinlang.org/)                         | Linguagem utilizada    | JetBrains     |
-| [Ktor](https://github.com/ktorio/ktor)                    | HTTPEngine             | JetBrains     |
 | [Exposed](https://github.com/JetBrains/Exposed)           | Conexão com a database | JetBrains     |
-| [Penicillin](https://github.com/StarryBlueSky/Penicillin) | API para o Twitter     | StarryBlueSky |
+| [Twitter4J](https://github.com/Twitter4J/Twitter4J)       | API para o Twitter     | Twitter4J     |
