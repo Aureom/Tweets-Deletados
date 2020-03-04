@@ -22,8 +22,8 @@ fun main() {
         }
     }
 
-    timer.schedule(verifyNewTweetsTask, 0, TimeUnit.SECONDS.toMillis(5))
-    timer.schedule(verifyDeletedTweetsTask, 0, TimeUnit.SECONDS.toMillis(10))
+    timer.schedule(verifyNewTweetsTask, 0, TimeUnit.SECONDS.toMillis(30))
+    timer.schedule(verifyDeletedTweetsTask, 0, TimeUnit.MINUTES.toMillis(5))
 
     //exitProcess(0)
 }
