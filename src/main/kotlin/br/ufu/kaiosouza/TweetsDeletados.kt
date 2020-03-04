@@ -1,32 +1,29 @@
 package br.ufu.kaiosouza
 
-import br.ufu.kaiosouza.database.tables.TweetStorage
-import jp.nephy.penicillin.PenicillinClient
-import jp.nephy.penicillin.core.session.config.account
-import jp.nephy.penicillin.core.session.config.application
-import jp.nephy.penicillin.core.session.config.token
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.joda.time.DateTime
+import br.ufu.kaiosouza.managers.DatabaseManager
+import br.ufu.kaiosouza.managers.TweetManager
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.system.exitProcess
 
+val databaseManager = DatabaseManager()
+val tweetManager = TweetManager()
 
 fun main() {
-    val client = PenicillinClient {
-        account {
-            application("ConsumerKey", "ConsumerSecret")
-            token("AccessToken", "AccessToken Secret")
+    val timer = Timer()
+    val verifyNewTweetsTask = object: TimerTask() {
+        override fun run() {
+            tweetManager.verifyNewTweets()
+        }
+    }
+    val verifyDeletedTweetsTask = object: TimerTask() {
+        override fun run() {
+            tweetManager.verifyDeletedTweets()
         }
     }
 
-    val database = Database.connect("jdbc:mysql://localhost:3306/twitter?useTimezone=true&serverTimezone=UTC", "com.mysql.cj.jdbc.Driver", "root", "")
+    timer.schedule(verifyNewTweetsTask, 0, TimeUnit.SECONDS.toMillis(5))
+    timer.schedule(verifyDeletedTweetsTask, 0, TimeUnit.SECONDS.toMillis(10))
 
-    transaction (database) {
-        SchemaUtils.create(TweetStorage)
-        TweetStorage.insert  {
-            it[contentText] = "teste"
-            it[date] = DateTime.now()
-        }
-    }
+    //exitProcess(0)
 }
